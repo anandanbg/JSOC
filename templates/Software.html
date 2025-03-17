@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Downloads</title>
+
+    <!-- Import Google Font (Matching Home Page) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif; /* Ensure font matches Home Page */
+            background-color: #595959; /* Match Home Page */
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Back Button - Top Left Corner */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #f00303;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        /* Add Arrow Icon Before Text */
+        .back-button::before {
+            content: "←"; /* Unicode arrow */
+            font-size: 18px;
+            margin-right: 8px;
+        }
+
+        .back-button:hover {
+            background: #e90b03;
+            transform: scale(1.05);
+        }
+
+        /* Heading Styles */
+        h1 {
+            margin-top: 50px;
+            font-size: 48px;
+            text-align: center;
+            font-weight: 600; /* Make it bold like Home Page */
+        }
+
+        /* Container Styling */
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+            margin-top: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 400; /* Match normal heading weight */
+            color: white;
+            border-bottom: 2px solid white;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            text-transform: uppercase;
+        }
+
+        /* Software List */
+        .software-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        .software-card {
+            background: #444;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+        }
+
+        .software-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .software-card span {
+            font-size: 18px;
+            font-weight: 400;
+        }
+
+        /* Download Button */
+        .download-btn {
+            text-decoration: none;
+            background: #888;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 400;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #555;
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            .software-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .download-btn {
+                margin-top: 5px;
+            }
+
+            /* Adjust Back Button for Smaller Screens */
+            .back-button {
+                top: 10px;
+                left: 10px;
+                padding: 8px 12px;
+            }
+
+            .back-button::before {
+                font-size: 16px;
+                margin-right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="{{ url_for('home') }}" class="back-button">Back</a>
+
+    <h1>Software Downloads</h1>
+    
+    <div class="container">
+        {% if security_softwares %}
+            <h2>Security Software</h2>
+            <ul class="software-list">
+                {% for file in security_softwares %}
+                    <li class="software-card">
+                        <span>{{ file }}</span> 
+                        <a href="{{ url_for('download_file', filename=file) }}" class="download-btn" download>Download</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if other_softwares %}
+            <h2>Other Software</h2>
+            <ul class="software-list">
+                {% for file in other_softwares %}
+                    <li class="software-card">
+                        <span>{{ file }}</span> 
+                        <a href="{{ url_for('download_file', filename=file) }}" class="download-btn" download>Download</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
